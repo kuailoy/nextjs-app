@@ -6,9 +6,15 @@ interface DemoProps {
 }
 
 export default function Demo({ img }: DemoProps) {
-  console.log('img: ', img)
   return (
-    <Image src={img} alt="Picture of the author" width={100} height={100} />
+    <Image
+      src={img}
+      alt="naonao"
+      width={1000}
+      height={1000}
+      placeholder="blur"
+      blurDataURL={img}
+    />
   )
 }
 

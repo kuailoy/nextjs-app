@@ -12,7 +12,8 @@ const client = new OSS({
 
 export async function getImage() {
   try {
-    const signUrl = client.signatureUrl('demo/DSCF0407.JPG', { expires: 600, process: 'image/resize,w_300' });
+    // const signUrl = client.signatureUrl('demo/DSCF0407.JPG', { expires: 600, process: 'image/resize,w_300', interlace: 1 });
+    const signUrl = client.signatureUrl('demo/DSCF0407.JPG', { expires: 600, interlace: 1 });
     // console.log("signUrl="+signUrl);
     // 列举当前账号所有地域下的存储空间。
     // const result = await client.listBuckets();

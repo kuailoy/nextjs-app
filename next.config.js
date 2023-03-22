@@ -5,7 +5,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'http',
-        hostname: 'extrodinary-photos.oss-cn-hangzhou.aliyuncs.com',
+        hostname: 'handing-photos.oss-cn-hongkong.aliyuncs.com',
       },
     ],
   },
