@@ -9,7 +9,7 @@ const bucketManager = new qiniu.rs.BucketManager(mac, config);
 
 export function getDemoImage() {
   try {
-    const publicDownloadUrl = bucketManager.publicDownloadUrl(PUBLIC_DOMAIN, 'demo/naonao.jpg');
+    const publicDownloadUrl = bucketManager.publicDownloadUrl(PUBLIC_DOMAIN, 'demo/naonao_interlace.jpg');
     // const signUrl = client.signatureUrl('demo/DSCF0407.JPG', { expires: 600, process: 'image/resize,w_300', interlace: 1 });
     // const signUrl = client.signatureUrl('demo/DSCF0407.JPG', {
     //   expires: 600,
