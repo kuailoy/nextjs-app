@@ -8,8 +8,8 @@ const nextConfig = {
       //   hostname: 'handing-photos.oss-cn-hongkong.aliyuncs.com',
       // },
       {
-          protocol: 'http',
-          hostname: 'rryq19vww.bkt.clouddn.com',
+          protocol: 'https',
+          hostname: 'processed-images-ap-east-1.s3.ap-east-1.amazonaws.com',
         },
     ],
   },

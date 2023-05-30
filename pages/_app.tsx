@@ -1,5 +1,6 @@
 import fetchJson from '@/lib/fetchJson'
 import '@/styles/globals.css'
+import '@/styles/embla.css'
 import { UserProvider } from '@auth0/nextjs-auth0/client'
 import type { AppProps } from 'next/app'
 import { SWRConfig } from 'swr'

@@ -1,48 +1,64 @@
+import {
+  GetObjectCommand,
+  ListObjectsV2Command,
+  S3Client,
+} from '@aws-sdk/client-s3'
 
-const qiniu = require('qiniu')
+const { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION, BUCKET_NAME } =
+  process.env
 
-const { ACCESS_KEY_ID, ACCESS_KEY_SECRET, DEFAULT_BUCKET, PUBLIC_DOMAIN } = process.env
-const mac = new qiniu.auth.digest.Mac(ACCESS_KEY_ID, ACCESS_KEY_SECRET)
-const config = new qiniu.conf.Config();
-console.log('config: ', config);
-const bucketManager = new qiniu.rs.BucketManager(mac, config);
+const client = new S3Client({ region: AWS_REGION })
 
-export function getDemoImage() {
+export const getObjectsKeys = async ({
+  bucket = BUCKET_NAME,
+  folderName,
+}: {
+  bucket?: string
+  folderName: string
+}) => {
   try {
-    const publicDownloadUrl = bucketManager.publicDownloadUrl(PUBLIC_DOMAIN, 'demo/naonao_interlace.jpg');
-    // const signUrl = client.signatureUrl('demo/DSCF0407.JPG', { expires: 600, process: 'image/resize,w_300', interlace: 1 });
-    // const signUrl = client.signatureUrl('demo/DSCF0407.JPG', {
-    //   expires: 600,
-    //   interlace: 1,
-    // })
-    // console.log("signUrl="+signUrl);
-    // 列举当前账号所有地域下的存储空间。
-    // const result = await client.listBuckets();
-    // console.log({signUrl});
-    return publicDownloadUrl
-    // return '../public/next.svg'
+    const listObjectCommand = new ListObjectsV2Command({
+      Bucket: BUCKET_NAME,
+      Prefix: folderName,
+    })
+    const listResponse = await client.send(listObjectCommand)
+    const objects = listResponse.Contents?.map((c) => c.Key)
+
+    return objects
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
-// export async function listImages() {
-//   try {
-//     const result = client.list({
-//       prefix: 'demo/',
-//     });
-//     return result;
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
+export const getObject = async ({
+  bucket = BUCKET_NAME,
+  key,
+}: {
+  key: string
+  bucket?: string
+}) => {
+  const param = {
+    Bucket: bucket,
+    Key: key,
+  }
+  const command = new GetObjectCommand(param)
+  const { Body } = await client.send(command)
+  const base64 = 'data:image/jpeg;base64,' + await Body?.transformToString('base64')
+  console.log('base64: ', base64);
+  return base64
+}
 
-// export async function listBuckets() {
-//   try {
-//     // 列举当前账号所有地域下的存储空间。
-//     const result = await client.listBuckets();
-//     return result;
-//   } catch (err) {
-//     console.log(err);
+// export const getObjectUrl = ({
+//   bucket = BUCKET_NAME,
+//   key,
+// }: {
+//   key: string
+//   bucket?: string
+// }) => {
+//   const param = {
+//     Bucket: bucket,
+//     Key: key,
 //   }
+//   const command = new GetObjectCommand(param)
+//   return getSignedUrl(client as any, command as any, { expiresIn: 3600 })
 // }
