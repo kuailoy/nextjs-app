@@ -3,6 +3,8 @@ import { withPageAuthRequired } from '@auth0/nextjs-auth0/client'
 import useSWR from 'swr'
 import Loading from '../components/Loading'
 import EmblaCarousel from '@/components/EmblaCarousel'
+import type { EmblaOptionsType } from 'embla-carousel-react'
+
 // import styles from '../styles/k.module.css'
 
 // interface MyLoaderParams {
@@ -14,11 +16,13 @@ import EmblaCarousel from '@/components/EmblaCarousel'
 // const myLoader = ({ src, width, quality = 100 }: MyLoaderParams) => {
 //   return `${src}?imageView2/1/w/${width}/q/${quality}`
 // }
+const OPTIONS: EmblaOptionsType = { loop: true }
+
 function Demo() {
   const { data: keys = {} } = useSWR(`/api/keys?folderName=kk/source`)
   const { sourceKeys = [], blurKeys = [] } = keys
   return (
-    sourceKeys?.length > 0 && <EmblaCarousel slides={sourceKeys} />
+    sourceKeys?.length > 0 && <EmblaCarousel slides={sourceKeys} options={OPTIONS}/>
   )
 }
 export default withPageAuthRequired(Demo as any, {

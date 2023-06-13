@@ -16,17 +16,23 @@
     "@auth0/nextjs-auth0": "^2.4.0",
     "@aws-sdk/client-s3": "^3.332.0",
     "@aws-sdk/s3-request-presigner": "^3.338.0",
+    "@chakra-ui/react": "^1",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
     "antd": "^5.4.5",
     "embla-carousel-react": "8.0.0-rc05",
     "eslint-config-next": "13.2.4",
+    "framer-motion": "^6",
     "install": "^0.13.0",
     "nanoid": "^4.0.2",
     "next": "13.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-transition-group": "^4.4.5",
     "swr": "^2.1.0"
   },
   "devDependencies": {
+    "@svgr/webpack": "^8.0.1",
     "@types/node": "18.15.5",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
@@ -38,6 +44,6 @@
     "prettier-plugin-organize-imports": "^3.2.2",
     "prettier-plugin-tailwindcss": "^0.2.5",
     "tailwindcss": "^3.2.7",
-    "typescript": "5.0.2"
+    "typescript": "4.9.5"
   }
 }
