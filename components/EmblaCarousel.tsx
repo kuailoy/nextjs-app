@@ -23,10 +23,11 @@ const navs = [
 
 type PropType = {
   slides: string[]
+  category?: string;
   options?: EmblaOptionsType
 }
 const EmblaCarousel: React.FC<PropType> = (props) => {
-  const { slides, options } = props
+  const { slides, options, category = 'family' } = props
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [emblaMainRef, emblaMainApi] = useEmblaCarousel(options)
   const [emblaThumbsRef, emblaThumbsApi] = useEmblaCarousel({
@@ -34,7 +35,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
     dragFree: true,
   })
   const [thumbVisible, setThumbVisible] = useState(false)
-  const [activeNav, setActiveNav] = useState(navs[0])
+  const [activeNav, setActiveNav] = useState(() => navs.find(nav => nav.toUpperCase() === category.toUpperCase()))
 
   const onThumbClick = useCallback(
     (index: number) => {
