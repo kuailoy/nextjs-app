@@ -1,6 +1,16 @@
 import Image from 'next/image'
 import React from 'react'
 
+// interface MyLoaderParams {
+//   src: string
+//   width: number
+//   quality?: number
+// }
+
+// const myLoader = ({ src, width = 300, quality = 100 }: MyLoaderParams) => {
+//   return `${src}?imageView2/1/w/${width}/q/${quality}`
+// }
+
 type PropType = {
   selected: boolean
   imgSrc: string
