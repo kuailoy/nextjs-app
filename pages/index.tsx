@@ -14,7 +14,7 @@ import type { EmblaOptionsType } from 'embla-carousel-react'
 const OPTIONS: EmblaOptionsType = { loop: true }
 
 function Home() {
-  const { data: keys = {} } = useSWR(`/api/keys?folderName=kk/source`)
+  const { data: keys = {} } = useSWR(`/api/keys?folderName=family/source`)
   const { sourceKeys = [], blurKeys = [] } = keys
   return (
     sourceKeys?.length > 0 && <EmblaCarousel slides={sourceKeys} options={OPTIONS}/>
