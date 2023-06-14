@@ -2,9 +2,6 @@
   "name": "next-app",
   "version": "0.1.0",
   "private": true,
-  "bin": {
-    "aws-s3": "bin/aws-s3.js"
-  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
