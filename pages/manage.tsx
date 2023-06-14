@@ -1,5 +1,4 @@
 // import { UploadOutlined } from '@ant-design/icons'
-// import { withPageAuthRequired } from '@auth0/nextjs-auth0/client'
 // import { Button, Upload } from 'antd'
 // import type { UploadProps } from 'antd/es/upload/interface'
 // import { nanoid } from 'nanoid'

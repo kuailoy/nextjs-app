@@ -1,7 +1,5 @@
 // import SliderBox from '@/components/SliderBox'
-import { withPageAuthRequired } from '@auth0/nextjs-auth0/client'
 import useSWR from 'swr'
-import Loading from '../components/Loading'
 import EmblaCarousel from '@/components/EmblaCarousel'
 import type { EmblaOptionsType } from 'embla-carousel-react'
 
@@ -25,7 +23,4 @@ function Demo() {
     sourceKeys?.length > 0 && <EmblaCarousel slides={sourceKeys} options={OPTIONS}/>
   )
 }
-export default withPageAuthRequired(Demo as any, {
-  onRedirecting: () => <Loading />,
-  onError: (error) => <div>{error.message}</div>,
-})
+export default Demo
