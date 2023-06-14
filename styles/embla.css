@@ -19,11 +19,11 @@
 }
 
 .embla-thumbs__slide {
-  flex: 0 0 7rem;
+  flex: 0 0 4rem;
+  height: 4rem;
   min-width: 0;
   position: relative;
   transition: border 0.3s ease;
-
 }
 @media (min-width: 576px) {
   .embla-thumbs__slide {
@@ -44,24 +44,6 @@
   width: 100%;
   opacity: 0.95;
 }
-.embla-thumbs__slide--selected  {
+.embla-thumbs__slide--selected {
   border: 2px solid #fff;
 }
-
-/* .fade-enter {
-  opacity: 0;
-}
-
-.fade-enter-active {
-  opacity: 1;
-  transition: opacity 300ms;
-}
-
-.fade-exit {
-  opacity: 1;
-}
-
-.fade-exit-active {
-  opacity: 0;
-  transition: opacity 300ms;
-} */
