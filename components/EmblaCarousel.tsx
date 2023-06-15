@@ -98,7 +98,6 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
               >
                 <Image
                   className="object-contain"
-                  // className="absolute left-0 top-0 object-contain"
                   src={URL_PREFIX + key}
                   alt="error"
                   fill

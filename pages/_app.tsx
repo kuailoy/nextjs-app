@@ -1,6 +1,7 @@
 import fetchJson from '@/lib/fetchJson'
 import '@/styles/embla.css'
 import '@/styles/globals.css'
+
 import { ChakraProvider } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
 import { SWRConfig } from 'swr'

@@ -1,5 +1,6 @@
 import EmblaCarousel from '@/components/EmblaCarousel'
 import type { EmblaOptionsType } from 'embla-carousel-react'
+import Image from 'next/image'
 import useSWR from 'swr'
 
 // interface MyLoaderParams {
@@ -23,7 +24,12 @@ function Content({ category = 'family' }: ContentProps) {
   return sourceKeys?.length > 0 ? (
     <EmblaCarousel slides={sourceKeys} options={OPTIONS} category={category} />
   ) : (
-    <div>loading...</div>
+    <div className="flex flex-col items-center pt-20">
+      <Image src="/infinity.svg" alt="" width={80} height={80} />
+      <p className="font-serif pl-2 text-xl leading-8 text-stone-500">
+        Loading...
+      </p>
+    </div>
   )
 }
 export default Content
