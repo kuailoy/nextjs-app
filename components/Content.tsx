@@ -25,7 +25,7 @@ function Content({ category = 'family' }: ContentProps) {
     <EmblaCarousel slides={sourceKeys} options={OPTIONS} category={category} />
   ) : (
     <div className="flex flex-col items-center pt-20">
-      <Image src="/infinity.svg" alt="" width={80} height={80} />
+      <Image src="/infinity.svg" alt="" width={80} height={80} priority />
       <p className="font-serif pl-2 text-xl leading-8 text-stone-500">
         Loading...
       </p>

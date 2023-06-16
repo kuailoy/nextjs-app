@@ -92,7 +92,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
         </h2>
         <IconMore width={32} height={32} />
       </div>
-      <div className="embla flex flex-1 flex-col">
+      <div className="embla flex flex-1 flex-col pb-1">
         <div
           className="embla__viewport relative flex-1 overflow-hidden"
           ref={emblaMainRef}
