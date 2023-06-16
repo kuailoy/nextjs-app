@@ -8,12 +8,13 @@ interface EmblaThumbsProps {
   setThumbVisible: React.Dispatch<React.SetStateAction<boolean>>
   onThumbClick: (index: number) => void
   thumbs: string[]
+  blurData: string[]
   selectedIndex: number
 }
 
 const EmblaThumbs = forwardRef<HTMLDivElement, EmblaThumbsProps>(
   function EmblaThumbs(props, ref) {
-    const { thumbs, selectedIndex, setThumbVisible, onThumbClick } = props
+    const { thumbs, blurData, selectedIndex, setThumbVisible, onThumbClick } = props
 
     return (
       <div
@@ -28,6 +29,7 @@ const EmblaThumbs = forwardRef<HTMLDivElement, EmblaThumbsProps>(
                 selected={index === selectedIndex}
                 index={index}
                 imgSrc={URL_PREFIX + thumbKey}
+                blurSrc={URL_PREFIX + blurData[index]}
                 key={index}
               />
             ))}

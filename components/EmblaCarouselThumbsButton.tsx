@@ -1,5 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
+import styles from '@/styles/image.module.css'
+
 
 // interface MyLoaderParams {
 //   src: string
@@ -14,12 +16,17 @@ import React from 'react'
 type PropType = {
   selected: boolean
   imgSrc: string
+  blurSrc: string
   index: number
   onClick: () => void
 }
 
 export const Thumb: React.FC<PropType> = (props) => {
-  const { selected, imgSrc, index, onClick } = props
+  const { selected, blurSrc, imgSrc, index, onClick } = props
+
+  const handleImageLoad = (event: any) => {
+    event.target.classList.add(styles.loaded);
+  };
 
   return (
     <div
@@ -33,11 +40,14 @@ export const Thumb: React.FC<PropType> = (props) => {
         type="button"
       >
         <Image
-          className="object-fit absolute left-0 top-0"
+          className={`${styles.image} object-fit absolute left-0 top-0`}
           src={imgSrc}
           alt="error"
           fill
           quality={100}
+          onLoad={handleImageLoad}
+          placeholder="blur"
+          blurDataURL={blurSrc}
         />
       </button>
     </div>

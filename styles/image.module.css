@@ -1,0 +1,8 @@
+.image {
+  transition: filter 0.5s ease-out;
+  filter: blur(10px);
+}
+
+.image.loaded {
+  filter: none;
+}
