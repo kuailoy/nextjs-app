@@ -7,10 +7,10 @@ import styles from '@/styles/image.module.css'
 import { isMobile } from '@/utils'
 import { HStack, SlideFade, Spacer } from '@chakra-ui/react'
 import useEmblaCarousel, { EmblaOptionsType } from 'embla-carousel-react'
-import Image from 'next/image'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { NextButton, PrevButton } from './EmblaCarouselArrowsButton'
 import EmblaThumbs from './EmblaThumbs'
+import { LazyLoadImage } from './LazyLoadImage'
 
 const navs = [
   'Portrait',
@@ -39,6 +39,8 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
   const [activeNav, setActiveNav] = useState(() =>
     navs.find((nav) => nav.toUpperCase() === category.toUpperCase()),
   )
+  // slides already in view
+  const [slidesInView, setSlidesInView] = useState<number[]>([])
 
   const handleImageLoad = (event: any) => {
     event.target.classList.add(styles.loaded)
@@ -53,10 +55,20 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
   )
 
   const onSelect = useCallback(() => {
+    console.log('onSelect: ', 1)
     if (!emblaMainApi || !emblaThumbsApi) return
+
+    if (slidesInView.length !== emblaMainApi.slideNodes().length) {
+      setSlidesInView((slidesInView) => {
+        const inView = emblaMainApi
+          .slidesInView(true)
+          .filter((index) => !slidesInView.includes(index))
+        return slidesInView.concat(inView)
+      })
+    }
     setSelectedIndex(emblaMainApi.selectedScrollSnap())
     emblaThumbsApi.scrollTo(emblaMainApi.selectedScrollSnap())
-  }, [emblaMainApi, emblaThumbsApi, setSelectedIndex])
+  }, [emblaMainApi, emblaThumbsApi, setSelectedIndex, slidesInView.length])
 
   const scrollPrev = useCallback(
     () => emblaMainApi && emblaMainApi.scrollPrev(),
@@ -99,23 +111,14 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
         >
           <div className="embla__container absolute bottom-0 left-0 right-0 top-0 flex !transform-none touch-pan-y">
             {slides.map((key, index) => (
-              <div
-                className={`embla__slide h-full ${
-                  index === selectedIndex ? 'is-selected' : ''
-                }`}
-                key={index}
-              >
-                <Image
-                  className={`${styles.image} object-contain`}
-                  src={URL_PREFIX + key}
-                  alt="error"
-                  fill
-                  quality={100}
-                  onLoad={handleImageLoad}
-                  placeholder="blur"
-                  blurDataURL={URL_PREFIX + blurData[index]}
-                />
-              </div>
+              <LazyLoadImage
+                key={key}
+                index={index}
+                selectedIndex={selectedIndex}
+                imgSrc={URL_PREFIX + key}
+                blurDataURL={URL_PREFIX + blurData[index]}
+                inView={slidesInView.indexOf(index) > -1}
+              />
             ))}
           </div>
           <PrevButton onClick={scrollPrev} />

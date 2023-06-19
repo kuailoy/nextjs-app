@@ -1,7 +1,7 @@
+import styles from '@/styles/image.module.css'
+import { isMobile } from '@/utils'
 import Image from 'next/image'
 import React from 'react'
-import styles from '@/styles/image.module.css'
-
 
 // interface MyLoaderParams {
 //   src: string
@@ -25,8 +25,8 @@ export const Thumb: React.FC<PropType> = (props) => {
   const { selected, blurSrc, imgSrc, index, onClick } = props
 
   const handleImageLoad = (event: any) => {
-    event.target.classList.add(styles.loaded);
-  };
+    event.target.classList.add(styles.loaded)
+  }
 
   return (
     <div
@@ -43,8 +43,9 @@ export const Thumb: React.FC<PropType> = (props) => {
           className={`${styles.image} object-fit absolute left-0 top-0`}
           src={imgSrc}
           alt="error"
-          fill
-          quality={100}
+          width={isMobile() ? 64 : 92}
+          height={isMobile() ? 64 : 92}
+          quality={85}
           onLoad={handleImageLoad}
           placeholder="blur"
           blurDataURL={blurSrc}
