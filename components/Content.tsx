@@ -1,6 +1,6 @@
 import EmblaCarousel from '@/components/EmblaCarousel'
+import IconLoading from '@/public/infinity.svg'
 import type { EmblaOptionsType } from 'embla-carousel-react'
-import Image from 'next/image'
 import useSWR from 'swr'
 
 // interface MyLoaderParams {
@@ -25,7 +25,7 @@ function Content({ category = 'family' }: ContentProps) {
     <EmblaCarousel slides={sourceKeys} options={OPTIONS} category={category} />
   ) : (
     <div className="flex flex-col items-center pt-20">
-      <Image src="/infinity.svg" alt="" width={80} height={80} priority />
+      <IconLoading width={80} height={80} />
       <p className="font-serif pl-2 text-xl leading-8 text-stone-500">
         Loading...
       </p>
