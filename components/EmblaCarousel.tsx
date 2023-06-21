@@ -1,10 +1,9 @@
 import { URL_PREFIX } from '@/config'
+import { Data } from '@/lib/getSourceKeys'
 import IconInstagram from '@/public/instagram.svg'
 import IconMore from '@/public/more.svg'
 import IconTiktok from '@/public/tiktok.svg'
 import IconWeibo from '@/public/weibo.svg'
-import styles from '@/styles/image.module.css'
-import { isMobile } from '@/utils'
 import { HStack, SlideFade, Spacer } from '@chakra-ui/react'
 import useEmblaCarousel, { EmblaOptionsType } from 'embla-carousel-react'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
@@ -23,12 +22,15 @@ const navs = [
 ]
 
 type PropType = {
-  slides: string[]
+  data: Data
   category?: string
   options?: EmblaOptionsType
+  isMobile: boolean
 }
 const EmblaCarousel: React.FC<PropType> = (props) => {
-  const { slides, options, category = 'family' } = props
+  const { data, options, category = 'family', isMobile } = props
+  const slides = useMemo(() => Object.keys(data), [data])
+
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [emblaMainRef, emblaMainApi] = useEmblaCarousel(options)
   const [emblaThumbsRef, emblaThumbsApi] = useEmblaCarousel({
@@ -42,10 +44,6 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
   // slides already in view
   const [slidesInView, setSlidesInView] = useState<number[]>([])
 
-  const handleImageLoad = (event: any) => {
-    event.target.classList.add(styles.loaded)
-  }
-
   const onThumbClick = useCallback(
     (index: number) => {
       if (!emblaMainApi || !emblaThumbsApi) return
@@ -55,7 +53,6 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
   )
 
   const onSelect = useCallback(() => {
-    console.log('onSelect: ', 1)
     if (!emblaMainApi || !emblaThumbsApi) return
 
     if (slidesInView.length !== emblaMainApi.slideNodes().length) {
@@ -87,14 +84,12 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
   }, [emblaMainApi, onSelect])
 
   const thumbs = useMemo(() => {
-    return slides?.map((key) => key!.replace('/source/', '/thumb/'))
-  }, [slides])
+    return slides?.map((key) => data[key].thumb)
+  }, [data, slides])
 
   const blurData = useMemo(() => {
-    return slides?.map((key) => key!.replace('/source/', '/blur/'))
-  }, [slides])
-
-  const mobileEnv = useMemo(() => isMobile(), [])
+    return slides?.map((key) => data[key].blur)
+  }, [data,slides])
 
   return (
     <div className="relative flex h-full flex-col">
@@ -116,7 +111,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                 index={index}
                 selectedIndex={selectedIndex}
                 imgSrc={URL_PREFIX + key}
-                blurDataURL={URL_PREFIX + blurData[index]}
+                blurDataURL={data[key].blur}
                 inView={slidesInView.indexOf(index) > -1}
               />
             ))}
@@ -126,7 +121,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
         </div>
       </div>
       <div className="bottom-0.5 sm:absolute sm:bottom-16 sm:left-0 sm:right-0 sm:z-10">
-        {mobileEnv ? (
+        {isMobile ? (
           <EmblaThumbs
             ref={emblaThumbsRef}
             setThumbVisible={setThumbVisible}
@@ -134,6 +129,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
             thumbs={thumbs}
             blurData={blurData}
             onThumbClick={onThumbClick}
+            isMobile={isMobile}
           />
         ) : (
           <SlideFade in={thumbVisible}>
@@ -144,6 +140,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
               thumbs={thumbs}
               blurData={blurData}
               onThumbClick={onThumbClick}
+              isMobile={isMobile}
             />
           </SlideFade>
         )}

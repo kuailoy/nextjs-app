@@ -1,8 +1,9 @@
 import EmblaCarousel from '@/components/EmblaCarousel'
+import { Data } from '@/lib/getSourceKeys'
 import IconLoading from '@/public/infinity.svg'
 import type { EmblaOptionsType } from 'embla-carousel-react'
-import useSWR from 'swr'
-
+import { isEmpty } from 'lodash'
+import { useMemo } from 'react'
 // interface MyLoaderParams {
 //   src: string
 //   width: number
@@ -16,13 +17,19 @@ const OPTIONS: EmblaOptionsType = { loop: true }
 
 interface ContentProps {
   category: string
+  data: Data
+  isMobile: boolean
 }
 
-function Content({ category = 'family' }: ContentProps) {
-  const { data: keys = {} } = useSWR(`/api/keys?folderName=${category}/source`)
-  const { sourceKeys = [], blurKeys = [] } = keys
-  return sourceKeys?.length > 0 ? (
-    <EmblaCarousel slides={sourceKeys} options={OPTIONS} category={category} />
+function Content({ category, data, isMobile }: ContentProps) {
+  const showContent = useMemo(() => !isEmpty(data), [data])
+  return showContent ? (
+    <EmblaCarousel
+      data={data}
+      options={OPTIONS}
+      category={category}
+      isMobile={isMobile}
+    />
   ) : (
     <div className="flex flex-col items-center pt-20">
       <IconLoading width={80} height={80} />

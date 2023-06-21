@@ -33,7 +33,7 @@ export const LazyLoadImage: React.FC<PropType> = (props) => {
         quality={100}
         onLoad={handleImageLoad}
         placeholder="blur"
-        blurDataURL={blurDataURL}
+        blurDataURL={inView ? blurDataURL : PLACEHOLDER_SRC}
       />
     </div>
   )

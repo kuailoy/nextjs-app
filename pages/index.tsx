@@ -1,7 +1,18 @@
-import Head from 'next/head'
 import Content from '@/components/Content'
+import getAllSourceKeys, { AllData, createData } from '@/lib/getSourceKeys'
+import type { NextPageContext } from 'next'
+import Head from 'next/head'
+import { useMemo, useState } from 'react'
 
-export default function Home() {
+interface HomeProps {
+  allData: AllData
+  isMobile: boolean
+}
+
+export default function Home({ allData, ...props }: HomeProps) {
+  const [category, setCategory] = useState('family')
+  const data = useMemo(() => allData[category], [allData, category])
+
   return (
     <>
       <Head>
@@ -11,8 +22,23 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="h-full">
-        <Content category="family" />
+        <Content category={category} data={data} {...props} />
       </main>
     </>
   )
+}
+
+export async function getStaticProps({ req }: NextPageContext) {
+  const userAgent = req?.headers['user-agent'] ?? ''
+  // 根据用户代理字符串判断设备类型
+  const isMobile = /Mobile/i.test(userAgent)
+
+  const sourceKeys = await getAllSourceKeys()
+  const allData = await createData(sourceKeys)
+  return {
+    props: {
+      isMobile,
+      allData,
+    },
+  }
 }

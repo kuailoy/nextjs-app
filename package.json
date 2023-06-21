@@ -12,6 +12,7 @@
     "@ant-design/icons": "^5.0.1",
     "@aws-sdk/client-s3": "^3.332.0",
     "@aws-sdk/s3-request-presigner": "^3.338.0",
+    "@aws-sdk/util-stream-node": "^3.350.0",
     "@chakra-ui/react": "^1",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
@@ -20,12 +21,15 @@
     "eslint-config-next": "13.2.4",
     "framer-motion": "^6",
     "install": "^0.13.0",
+    "lodash": "^4.17.21",
     "nanoid": "^4.0.2",
     "next": "13.2.4",
+    "plaiceholder": "^3.0.0",
     "qiniu": "^7.8.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-transition-group": "^4.4.5",
+    "sharp": "^0.32.1",
     "swr": "^2.1.0"
   },
   "devDependencies": {
