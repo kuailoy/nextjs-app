@@ -31,7 +31,7 @@ export default function Home({ allData, ...props }: HomeProps) {
 export async function getStaticProps({ req }: NextPageContext) {
   const userAgent = req?.headers['user-agent'] ?? ''
   // 根据用户代理字符串判断设备类型
-  const isMobile = /Mobile/i.test(userAgent)
+  const isMobile = /(iphone|ipad|android)/i.test(userAgent)
 
   const sourceKeys = await getAllSourceKeys()
   const allData = await createData(sourceKeys)
