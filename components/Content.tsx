@@ -18,17 +18,15 @@ const OPTIONS: EmblaOptionsType = { loop: true }
 interface ContentProps {
   category: string
   data: Data
-  isMobile: boolean
 }
 
-function Content({ category, data, isMobile }: ContentProps) {
+function Content({ category, data }: ContentProps) {
   const showContent = useMemo(() => !isEmpty(data), [data])
   return showContent ? (
     <EmblaCarousel
       data={data}
       options={OPTIONS}
       category={category}
-      isMobile={isMobile}
     />
   ) : (
     <div className="flex flex-col items-center pt-20">

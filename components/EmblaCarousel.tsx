@@ -10,6 +10,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { NextButton, PrevButton } from './EmblaCarouselArrowsButton'
 import EmblaThumbs from './EmblaThumbs'
 import { LazyLoadImage } from './LazyLoadImage'
+import useWindowWidth from '../hooks/useWindowWidth'
 
 const navs = [
   'Portrait',
@@ -25,10 +26,9 @@ type PropType = {
   data: Data
   category?: string
   options?: EmblaOptionsType
-  isMobile: boolean
 }
 const EmblaCarousel: React.FC<PropType> = (props) => {
-  const { data, options, category = 'family', isMobile } = props
+  const { data, options, category = 'family' } = props
   const slides = useMemo(() => Object.keys(data), [data])
 
   const [selectedIndex, setSelectedIndex] = useState(0)
@@ -90,6 +90,10 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
   const blurData = useMemo(() => {
     return slides?.map((key) => data[key].blur)
   }, [data,slides])
+
+  const windowWidth = useWindowWidth()
+
+  const isMobile = useMemo(() => windowWidth ? windowWidth <= 640 : false, [windowWidth])
 
   return (
     <div className="relative flex h-full flex-col">

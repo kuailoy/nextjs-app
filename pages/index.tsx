@@ -6,10 +6,9 @@ import { useMemo, useState } from 'react'
 
 interface HomeProps {
   allData: AllData
-  isMobile: boolean
 }
 
-export default function Home({ allData, ...props }: HomeProps) {
+export default function Home({ allData }: HomeProps) {
   const [category, setCategory] = useState('family')
   const data = useMemo(() => allData[category], [allData, category])
 
@@ -22,22 +21,17 @@ export default function Home({ allData, ...props }: HomeProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="h-full">
-        <Content category={category} data={data} {...props} />
+        <Content category={category} data={data} />
       </main>
     </>
   )
 }
 
-export async function getStaticProps({ req }: NextPageContext) {
-  const userAgent = req?.headers['user-agent'] ?? ''
-  // 根据用户代理字符串判断设备类型
-  const isMobile = /(iphone|ipad|android)/i.test(userAgent)
-
+export async function getStaticProps() {
   const sourceKeys = await getAllSourceKeys()
   const allData = await createData(sourceKeys)
   return {
     props: {
-      isMobile,
       allData,
     },
   }
